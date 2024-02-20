@@ -15,7 +15,7 @@ public class CoingeckoController implements CoingeckoOperation {
 
   @Override
   public String getPrice(String currency, String id){
-    return coingeckoService.getPrice();
+    return coingeckoService.getPrice(currency, id);
   }
 
   
