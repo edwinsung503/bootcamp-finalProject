@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.vtxlab.bootcamp.fianlproject.annotation.CoinIdCheck;
 import com.vtxlab.bootcamp.fianlproject.dto.response.CoingeckoFinalDTO;
 
-@Validated // 1
+//@Validated // 1
 public interface CoingeckoOperation {
 
   //method 1 : Get
@@ -18,7 +18,7 @@ public interface CoingeckoOperation {
   @GetMapping(value ="/coin")
   @ResponseStatus(value = HttpStatus.OK)
   CoingeckoFinalDTO getPrice(@RequestParam (value="currency") String currency,
-               @CoinIdCheck @RequestParam(value="ids") List<String> ids);
+               @RequestParam(value="ids") List<String> ids);
 
   //http://localhost:8080/crypto/coingecko/api/v1/coins
   @GetMapping(value = "/coins")
