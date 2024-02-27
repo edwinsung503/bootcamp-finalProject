@@ -1,7 +1,6 @@
 package com.vtxlab.bootcamp.fianlproject.infra;
 
-
-public enum Coin {
+public enum Currency {
 
     BITCOIN,
     ETHEREUM;

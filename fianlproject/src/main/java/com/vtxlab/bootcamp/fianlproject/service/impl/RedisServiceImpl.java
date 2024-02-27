@@ -1,11 +1,13 @@
 package com.vtxlab.bootcamp.fianlproject.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vtxlab.bootcamp.fianlproject.infra.RedisHelper;
 import com.vtxlab.bootcamp.fianlproject.model.CoinUser;
 import com.vtxlab.bootcamp.fianlproject.service.RedisService;
 
+@Service
 public class RedisServiceImpl implements RedisService{
   
   @Autowired

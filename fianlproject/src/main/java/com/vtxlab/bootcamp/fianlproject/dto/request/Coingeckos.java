@@ -1,5 +1,7 @@
 package com.vtxlab.bootcamp.fianlproject.dto.request;
 
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -21,7 +23,7 @@ public class Coingeckos {
     private String image;
     private double current_price;
     private long market_cap;
-    private int market_cap_rank;
+    private long market_cap_rank;
     private long fully_diluted_valuation;
     private long total_volume;
     private double high_24h;
@@ -32,15 +34,21 @@ public class Coingeckos {
     private double market_cap_change_percentage_24h;
     private double circulating_supply;
     private double total_supply;
-    private Double max_supply;
+    private double max_supply;
     private double ath;
     private double ath_change_percentage;
     private String ath_date;
     private double atl;
     private double atl_change_percentage;
     private String atl_date;
-    private Object roi;
+    private Roi roi;
     private String last_updated;
 
-    
+    @Getter
+    private static class Roi{
+        
+       private double times;
+        private String currency;
+        private double percentage;
+    }
 }

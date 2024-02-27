@@ -8,6 +8,7 @@ import com.vtxlab.bootcamp.fianlproject.model.CoinUser;
 public interface RedisOperation {
     
     @PostMapping(value = "/coins1")
-    CoinUser createUser (@RequestParam String key, @RequestParam CoinUser coinUser) throws JsonProcessingException;
+    CoinUser createUser (@RequestParam String key, @RequestParam CoinUser coinUser) 
+        throws JsonProcessingException;
     
 }

@@ -20,4 +20,5 @@ public class CoingeckoFinalDTO {
     private String message;
     @JsonProperty(value ="data")
     private List<CoingeckoDTO> coingeckoDTO; 
+    
 }

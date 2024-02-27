@@ -5,5 +5,6 @@ import com.vtxlab.bootcamp.fianlproject.model.CoinUser;
 
 public interface RedisService {
     
-  CoinUser createUser(String key, CoinUser coinUser) throws JsonProcessingException;
+  CoinUser createUser(String key, CoinUser coinUser) 
+    throws JsonProcessingException;
 }

@@ -7,5 +7,4 @@ public interface CoingeckoService {
   
   CoingeckoFinalDTO getPrice(String current, List<String> id);
 
-  CoingeckoFinalDTO getCoingeckos();
 }
