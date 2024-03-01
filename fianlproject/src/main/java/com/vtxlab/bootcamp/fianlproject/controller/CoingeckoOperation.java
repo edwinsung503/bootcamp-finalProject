@@ -13,7 +13,7 @@ public interface CoingeckoOperation {
   //method 1 : Get
   //http://localhost:8080/crypto/coingecko/api/v1/coins?currency=usd&ids=bitcoin,ethereum
   //test : http://localhost:8080/crypto/coingecko/api/v1/coin?currency=usd&ids=bitcoin
-  @GetMapping(value ="/coin")
+  @GetMapping(value ="/coins")
   @ResponseStatus(value = HttpStatus.OK)
   CoingeckoFinalDTO getPrice(@RequestParam (value="currency") String currency,
                @RequestParam(value="ids") List<String> ids);

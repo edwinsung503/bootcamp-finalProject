@@ -76,7 +76,7 @@ public class CoingeckoControllerTest {
 
         Mockito.when(coingeckoService.getPrice(currency, ids)).thenReturn(coingeckoFinalDTO);
 
-        mockMvc.perform(get("/crypto/coingecko/api/v1/coin")
+        mockMvc.perform(get("/crypto/coingecko/api/v1/coins")
                 .param("currency", currency)
                 .param("ids", ids.toArray(new String[0])))
                 .andExpect(status().isOk())

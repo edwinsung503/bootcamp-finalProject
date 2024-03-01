@@ -8,8 +8,8 @@ import com.vtxlab.bootcamp.fianlproject.controller.CoingeckoOperation;
 import com.vtxlab.bootcamp.fianlproject.dto.response.CoingeckoFinalDTO;
 import com.vtxlab.bootcamp.fianlproject.service.CoingeckoService;
 
-//@RestController
-//@RequestMapping(value= "/crypto/coingecko/api/v1")
+@RestController
+@RequestMapping(value= "/crypto/coingecko/api/v1")
 public class CoingeckoController implements CoingeckoOperation {
 
   @Autowired
