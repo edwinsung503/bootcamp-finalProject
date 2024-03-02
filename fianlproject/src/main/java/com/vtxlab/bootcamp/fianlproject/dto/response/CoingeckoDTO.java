@@ -66,7 +66,7 @@ public class CoingeckoDTO {
     }
     private double market_cap_change_24h;
     @JsonProperty(value="marketCapChange24h")
-    public double getMarket_Map_Change_24H(){
+    public double getMarket_Cap_Change_24H(){
         return this.market_cap_change_24h;
     }
     private double market_cap_change_percentage_24h;

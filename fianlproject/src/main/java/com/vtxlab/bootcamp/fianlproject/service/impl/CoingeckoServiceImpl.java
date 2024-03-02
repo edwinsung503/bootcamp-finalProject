@@ -6,10 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vtxlab.bootcamp.fianlproject.dto.response.CoingeckoDTO;
 import com.vtxlab.bootcamp.fianlproject.dto.response.CoingeckoFinalDTO;
-import com.vtxlab.bootcamp.fianlproject.infra.Currency;
 import com.vtxlab.bootcamp.fianlproject.infra.Syscode;
 import com.vtxlab.bootcamp.fianlproject.service.CoingeckoService;
 
@@ -42,7 +40,7 @@ public class CoingeckoServiceImpl implements CoingeckoService{
                 .low_24h(p.getLow_24H())
                 .price_change_24h(p.getPrice_Change_24H())
                 .price_change_percentage_24h(p.getPrice_Change_Percentage_24H())
-                .market_cap_change_24h(p.getMarket_Map_Change_24H())
+                .market_cap_change_24h(p.getMarket_Cap_Change_24H())
                 .market_cap_change_percentage_24h(p.getMarket_Cap_Change_Percentage_24H())
                 .circulating_supply(p.getCirculating_Supply())
                 .total_supply(p.getTotal_Supply())
@@ -66,4 +64,6 @@ public class CoingeckoServiceImpl implements CoingeckoService{
           .coingeckoDTO(coingeckoDTOs)
           .build();
   }
+
+   
 }

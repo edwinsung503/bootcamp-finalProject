@@ -3,9 +3,7 @@ package com.vtxlab.bootcamp.fianlproject.service;
 import java.util.List;
 import com.vtxlab.bootcamp.fianlproject.dto.response.CoingeckoFinalDTO;
 
-public interface CoingeckoService {
+public interface RedisCoingeckoService {
   
-  CoingeckoFinalDTO getPrice(String current, List<String> id);
-
-  
+  CoingeckoFinalDTO  getCoinMarketData(String currency, List<String> coinId);
 }

@@ -1,8 +1,14 @@
 package com.vtxlab.bootcamp.fianlproject.infra;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum Currency {
 
-    BITCOIN,
-    ETHEREUM;
+    USD("usd");
+
+    private String name;
     
 }

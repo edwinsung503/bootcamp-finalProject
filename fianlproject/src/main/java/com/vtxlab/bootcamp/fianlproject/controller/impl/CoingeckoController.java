@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.vtxlab.bootcamp.fianlproject.controller.CoingeckoOperation;
 import com.vtxlab.bootcamp.fianlproject.dto.response.CoingeckoFinalDTO;
+import com.vtxlab.bootcamp.fianlproject.infra.Currency;
+import com.vtxlab.bootcamp.fianlproject.infra.Syscode;
 import com.vtxlab.bootcamp.fianlproject.service.CoingeckoService;
 
 @RestController
@@ -18,7 +20,16 @@ public class CoingeckoController implements CoingeckoOperation {
   @Override
   //selected coinType
   public CoingeckoFinalDTO getPrice(String currency, List<String> id){
-    return coingeckoService.getPrice(currency, id);
+    if (currency.equals(Currency.USD.getName())){
+      return coingeckoService.getPrice(currency, id);
+    }
+    return CoingeckoFinalDTO.builder()
+            .code(Syscode.WRONG_CURRENCY.getCode())
+            .message(Syscode.WRONG_CURRENCY.getMessage()) 
+            .coingeckoDTO(null)
+            .build();
   }
+
+  
   
 }
