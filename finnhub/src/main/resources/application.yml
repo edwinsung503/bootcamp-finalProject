@@ -1,0 +1,10 @@
+server:
+  port : 8091
+
+api: 
+  finnhublaceholder:
+    domain: "finnhub.io/api/v1"
+    endpoints: 
+      users: "/users"
+      posts: "/posts"
+      comments: "/comments"

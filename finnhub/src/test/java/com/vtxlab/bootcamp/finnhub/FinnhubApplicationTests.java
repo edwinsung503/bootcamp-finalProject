@@ -1,10 +1,10 @@
-package com.vtxlab.bootcamp.finalproject;
+package com.vtxlab.bootcamp.finnhub;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FinalprojectApplicationTests {
+class FinnhubApplicationTests {
 
 	@Test
 	void contextLoads() {
