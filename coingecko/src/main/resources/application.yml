@@ -1,2 +1,11 @@
+
 server:
   port : 8090
+
+spring:
+  data: 
+    redis:
+     host: "localhost"
+  redis:
+    data:
+      port: 6379

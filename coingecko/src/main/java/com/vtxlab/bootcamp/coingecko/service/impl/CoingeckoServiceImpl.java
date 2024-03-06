@@ -1,9 +1,11 @@
 package com.vtxlab.bootcamp.coingecko.service.impl;
 
+import java.lang.module.ResolutionException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import com.vtxlab.bootcamp.coingecko.dto.response.CoingeckoDTO;
@@ -14,11 +16,13 @@ import com.vtxlab.bootcamp.coingecko.service.CoingeckoService;
 @Service
 public class CoingeckoServiceImpl implements CoingeckoService{
 
+
   @Autowired
   private RestTemplate restTemplate;
   
   @Override
-  public CoingeckoFinalDTO getPrice(String current, List<String> id){
+  public CoingeckoFinalDTO getPrice(String current, List<String> id) throws ResolutionException{
+
     String url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&x_cg_demo_api_key=CG-ZmN8v5NihmGLP3oayyFAPbsS";
     
     CoingeckoDTO[] coingeckos = restTemplate.getForObject(url, CoingeckoDTO[].class);

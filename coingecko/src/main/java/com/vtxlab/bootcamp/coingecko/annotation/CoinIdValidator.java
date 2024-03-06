@@ -12,7 +12,6 @@ public class CoinIdValidator implements ConstraintValidator<CoinIdCheck, List<St
     public boolean isValid(List<String> dto, ConstraintValidatorContext context){
         try {
             boolean validCoinId = true;
-            //List<String> str = dto.get();
             for (int i=0; i<dto.size(); i++){
                 if (!(dto.get(i).equals(CoinId.BITCOIN.getName()) || dto.get(i).equals(CoinId.ETHEREUM.getName()))){
                     validCoinId = false;

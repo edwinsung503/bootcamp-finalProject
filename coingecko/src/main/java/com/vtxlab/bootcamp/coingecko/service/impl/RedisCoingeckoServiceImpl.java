@@ -31,10 +31,9 @@ public class RedisCoingeckoServiceImpl implements RedisCoingeckoService{
     CoingeckoFinalDTO coinData = redisHelper.getValue(key);
 
     if (coinData != null) {
-        return coingeckoService.getPrice(currency, coinId);
+        return coinData;
     } else {
-        String url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=" + currency + "&ids=" + coinId;
-        
+        String url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&x_cg_demo_api_key=CG-ZmN8v5NihmGLP3oayyFAPbsS";
         try {
             CoingeckoDTO[] coingeckos = restTemplate.getForObject(url, CoingeckoDTO[].class);
             List<CoingeckoDTO> coingeckoDTOs = Arrays.stream(coingeckos)
