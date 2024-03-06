@@ -1,9 +1,7 @@
 package com.vtxlab.bootcamp.coingecko.annotation;
 
-import java.util.Currency;
 import java.util.List;
 import java.util.Objects;
-import com.vtxlab.bootcamp.coingecko.dto.request.CoinIdDTO;
 import com.vtxlab.bootcamp.coingecko.infra.CoinId;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

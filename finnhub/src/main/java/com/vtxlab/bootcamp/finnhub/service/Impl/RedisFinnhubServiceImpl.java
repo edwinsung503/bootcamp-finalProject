@@ -2,6 +2,7 @@ package com.vtxlab.bootcamp.finnhub.service.Impl;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -31,7 +32,7 @@ public class RedisFinnhubServiceImpl implements RedisFinnhubService{
     FinnhubStockFinalDTO stockData = redisHelper.getValue(key);
 
     if (stockData != null) {
-      return finnhubService.getStockPrice(symbol);
+      return stockData;
     } else {
       String url = "https://finnhub.io/api/v1/quote?symbol="+symbol+"&token=cnhecbhr01qhlslit6mgcnhecbhr01qhlslit6n0";
 
@@ -50,11 +51,17 @@ public class RedisFinnhubServiceImpl implements RedisFinnhubService{
                   .build();
           List<FinnhubStockDTO> finnhubDTOs = Collections.singletonList(finnhubDTO);
 
-            return FinnhubStockFinalDTO.builder()
+          FinnhubStockFinalDTO finalStockData = FinnhubStockFinalDTO.builder()
                   .code(Syscode.OK.getCode())
                   .message(Syscode.OK.getMessage())
                   .finnhubDTOs(finnhubDTOs)
                   .build();
+
+          //save the finalStockData to Redis
+          redisHelper.setValueWithExpiration(key, finalStockData, 1, TimeUnit.MINUTES);
+
+          return finalStockData;
+
       } catch (Exception e){
         return FinnhubStockFinalDTO.builder()
             .code(Syscode.REST_CLIENT_EXCEPTION.getCode())
@@ -67,38 +74,45 @@ public class RedisFinnhubServiceImpl implements RedisFinnhubService{
   
   public FinnhubCompanyProfileFinalDTO getCompanyProfile(String symbol){
     String key = "stock:finnhub:profile2:" + symbol;
-    FinnhubStockFinalDTO stockData = redisHelper.getValue(key);
+    FinnhubCompanyProfileFinalDTO stockData2 = redisHelper.getValue2(key);
 
-    if (stockData != null) {
-      return finnhubService.getStockProfile(symbol);
+    if (stockData2 != null) {
+      return stockData2;
     } else {
       String url = "https://finnhub.io/api/v1/stock/profile2?symbol="+symbol+"&token=cnhecbhr01qhlslit6mgcnhecbhr01qhlslit6n0";
+      
 
       try{
           FinnhubCompanyProfileDTO finnhubCompanyProfiles = restTemplate.getForObject(url, FinnhubCompanyProfileDTO.class);
     
-    FinnhubCompanyProfileDTO finnhubCompanyProfileDTO = FinnhubCompanyProfileDTO.builder()
-            .country(finnhubCompanyProfiles.getCountry())
-            .currency(finnhubCompanyProfiles.getCurrency())
-            .estimateCurrency(finnhubCompanyProfiles.getEstimateCurrency())
-            .exchange(finnhubCompanyProfiles.getExchange())
-            .finnhubIndustry(finnhubCompanyProfiles.getFinnhubIndustry())
-            .ipo(finnhubCompanyProfiles.getIpo())
-            .logo(finnhubCompanyProfiles.getLogo())
-            .marketCapitalization(finnhubCompanyProfiles.getMarketCapitalization())
-            .name(finnhubCompanyProfiles.getName())
-            .phone(finnhubCompanyProfiles.getPhone())
-            .shareOutstanding(finnhubCompanyProfiles.getShareOutstanding())
-            .ticker(finnhubCompanyProfiles.getTicker())
-            .weburl(finnhubCompanyProfiles.getWeburl())
-            .build();
-    List<FinnhubCompanyProfileDTO> finnhubCompanyProfileDTOs = Collections.singletonList(finnhubCompanyProfileDTO);
+          FinnhubCompanyProfileDTO finnhubCompanyProfileDTO = FinnhubCompanyProfileDTO.builder()
+              .country(finnhubCompanyProfiles.getCountry())
+              .currency(finnhubCompanyProfiles.getCurrency())
+              .estimateCurrency(finnhubCompanyProfiles.getEstimateCurrency())
+              .exchange(finnhubCompanyProfiles.getExchange())
+              .finnhubIndustry(finnhubCompanyProfiles.getFinnhubIndustry())
+              .ipo(finnhubCompanyProfiles.getIpo())
+              .logo(finnhubCompanyProfiles.getLogo())
+              .marketCapitalization(finnhubCompanyProfiles.getMarketCapitalization())
+              .name(finnhubCompanyProfiles.getName())
+              .phone(finnhubCompanyProfiles.getPhone())
+              .shareOutstanding(finnhubCompanyProfiles.getShareOutstanding())
+              .ticker(finnhubCompanyProfiles.getTicker())
+              .weburl(finnhubCompanyProfiles.getWeburl())
+              .build();
+          List<FinnhubCompanyProfileDTO> finnhubCompanyProfileDTOs = Collections.singletonList(finnhubCompanyProfileDTO);
 
-      return FinnhubCompanyProfileFinalDTO.builder()
-            .code(Syscode.OK.getCode())
-            .message(Syscode.OK.getMessage())
-            .finnhubCompanyProfileDTOs(finnhubCompanyProfileDTOs)
-            .build();
+          FinnhubCompanyProfileFinalDTO finalCompanyData =  FinnhubCompanyProfileFinalDTO.builder()
+                  .code(Syscode.OK.getCode())
+                  .message(Syscode.OK.getMessage())
+                  .finnhubCompanyProfileDTOs(finnhubCompanyProfileDTOs)
+                  .build();
+
+            //save the finalStockData to Redis
+            redisHelper.setValueWithExpiration2(key, finalCompanyData, 1, TimeUnit.MINUTES);
+
+            return finalCompanyData;
+
       } catch (Exception e){
         return FinnhubCompanyProfileFinalDTO.builder()
             .code(Syscode.REST_CLIENT_EXCEPTION.getCode())

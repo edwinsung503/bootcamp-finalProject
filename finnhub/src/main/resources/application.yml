@@ -8,3 +8,13 @@ api:
       users: "/users"
       posts: "/posts"
       comments: "/comments"
+
+#//'spring.data.redis.host' 
+
+spring:
+  data: 
+    redis:
+     host: "localhost"
+  redis:
+    data:
+      port: 6379
