@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.vtx.bootcamp.productdata.dto.mapper.StockMapper;
-import com.vtx.bootcamp.productdata.dto.response.StockDTO;
 import com.vtx.bootcamp.productdata.entity.StockEntity;
 import com.vtx.bootcamp.productdata.repository.StockJpaRepository;
 import com.vtx.bootcamp.productdata.service.StockService;
@@ -16,14 +15,25 @@ public class StockServiceImpl implements StockService{
   private StockJpaRepository stockJpaRepository;
 
   @Override
-  public void addStock( List<StockDTO> stocksId){
+  public void addStock( List<String> stocksId){
     //dto -> Entity 過程
-    for (StockDTO stockDTO: stocksId){
-      StockEntity stockEntity = StockMapper.map(stockDTO);
-      stockJpaRepository.save(stockEntity);
-      //if (stockJpaRepository.findByStockId(stockEntity) )
-       // stockJpaRepository.save(stockEntity);
-    }       
+    for (String stock_id: stocksId){
+      StockEntity stockEntity = StockMapper.map(stock_id);
+
+      List<StockEntity> stockidsEntities = stockJpaRepository.findByStockId(stock_id);
+      if (stockidsEntities.isEmpty()){
+        stockJpaRepository.save(stockEntity);
+      } else {
+        for (StockEntity stockidEntity : stockidsEntities){
+          if ( stockEntity.getStockId().equals(stockidEntity.getStockId())){
+            System.out.println("Equal");
+          } else {
+            stockJpaRepository.save(stockEntity);
+            System.out.println("Saved");
+          }
+        }
+      }    
+    }
   }
 
   @Override

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.vtx.bootcamp.productdata.controller.StockOperation;
-import com.vtx.bootcamp.productdata.dto.response.StockDTO;
 import com.vtx.bootcamp.productdata.service.StockService;
 
 @RestController
@@ -20,7 +19,7 @@ public class StockController implements StockOperation{
   private StockService stockService;
   
   @Override
-  public ResponseEntity<String> addStock(@RequestBody List<StockDTO> stocksId){
+  public ResponseEntity<String> addStock(@RequestBody List<String> stocksId){
     stockService.addStock(stocksId);
    return new ResponseEntity<>("Stocks added successfully", HttpStatus.CREATED);
   }

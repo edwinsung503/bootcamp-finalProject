@@ -20,7 +20,7 @@ public class CoinController implements CoinOperation{
   private CoinService coinService;
 
   @Override
-  public ResponseEntity<String> addCoin(@RequestBody List<CoinDTO> coinsId){
+  public ResponseEntity<String> addCoin(@RequestBody List<String> coinsId){
     coinService.addCoin(coinsId);
     return new ResponseEntity<>("Coins added successfully", HttpStatus.CREATED);
   }
