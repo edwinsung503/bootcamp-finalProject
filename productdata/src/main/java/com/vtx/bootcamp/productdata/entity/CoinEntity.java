@@ -1,6 +1,7 @@
 package com.vtx.bootcamp.productdata.entity;
 
 import java.io.Serializable;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,7 +27,8 @@ public class CoinEntity implements Serializable{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String coin_id;
+  @Column(name = "coin_id")
+  private String coinId;
 
   
 

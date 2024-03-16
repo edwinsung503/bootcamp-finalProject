@@ -9,7 +9,6 @@ import com.vtx.bootcamp.productdata.entity.CoinEntity;
 @Repository
 public interface CoinJpaRepository extends JpaRepository<CoinEntity,Long>{
   
-   //CoinEntity findById(Long id);
-   //List<CoinEntity> findByCoin_id(long coin_id);
    
+  void deleteByCoinId(String coin_id);
 }

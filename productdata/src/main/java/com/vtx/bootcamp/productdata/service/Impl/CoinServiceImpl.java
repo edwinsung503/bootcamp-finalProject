@@ -22,6 +22,12 @@ public class CoinServiceImpl implements CoinService{
       CoinEntity coinEntity = CoinMapper.map(coinDTO);
       coinJpaRepository.save(coinEntity);
     }
-    
+  }
+
+  @Override
+  public void deleteCoin(List<String> coinId){
+    for (String coinIds : coinId){
+      coinJpaRepository.deleteByCoinId(coinIds);
+    }
   }
 }

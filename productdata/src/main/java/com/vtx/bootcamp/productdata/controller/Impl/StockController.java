@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.vtx.bootcamp.productdata.controller.StockOperation;
 import com.vtx.bootcamp.productdata.dto.response.StockDTO;
@@ -22,5 +23,11 @@ public class StockController implements StockOperation{
   public ResponseEntity<String> addStock(@RequestBody List<StockDTO> stocksId){
     stockService.addStock(stocksId);
    return new ResponseEntity<>("Stocks added successfully", HttpStatus.CREATED);
+  }
+
+  @Override
+  public ResponseEntity<String> deleteStock(@RequestParam List<String> stock_id){
+    stockService.deleteStock(stock_id);
+    return new ResponseEntity<>("Stocks deteled successfully", HttpStatus.CREATED);
   }
 }

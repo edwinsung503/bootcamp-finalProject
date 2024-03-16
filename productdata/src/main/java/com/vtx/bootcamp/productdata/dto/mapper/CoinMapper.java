@@ -10,7 +10,7 @@ public class CoinMapper{
   public static CoinEntity map(CoinDTO coinDTO){
     //mapper from rq dto to response dto
     CoinEntity coinEntity = CoinEntity.builder()
-      .coin_id(coinDTO.getCoin_id())
+      .coinId(coinDTO.getCoin_id())
       .build();
     return coinEntity;
 

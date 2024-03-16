@@ -21,6 +21,16 @@ public class StockServiceImpl implements StockService{
     for (StockDTO stockDTO: stocksId){
       StockEntity stockEntity = StockMapper.map(stockDTO);
       stockJpaRepository.save(stockEntity);
+      //if (stockJpaRepository.findByStockId(stockEntity) )
+       // stockJpaRepository.save(stockEntity);
     }       
+  }
+
+  @Override
+  public void deleteStock(List<String> stockId){
+    for (String stockIds : stockId){
+      stockJpaRepository.deleteByStockId(stockIds);
+    }
+    
   }
 }

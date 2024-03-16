@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.vtx.bootcamp.productdata.controller.CoinOperation;
 import com.vtx.bootcamp.productdata.dto.response.CoinDTO;
@@ -24,4 +25,9 @@ public class CoinController implements CoinOperation{
     return new ResponseEntity<>("Coins added successfully", HttpStatus.CREATED);
   }
 
+  @Override
+  public ResponseEntity<String> deleteCoin(@RequestParam List<String> coin_id){
+    coinService.deleteCoin(coin_id);
+    return new ResponseEntity<>("Coins deteled successfully", HttpStatus.CREATED);
+  }
 }
