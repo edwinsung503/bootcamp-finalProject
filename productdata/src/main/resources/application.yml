@@ -16,3 +16,13 @@ spring:
       ddl-auto: update # update
 server:
   port: 8088
+
+currency: 
+  type: usd
+
+url: 
+  domain: http://edwinsung.com/crypto/coingecko/api/v1/coins
+  #domain: http://localhost:8090/crypto/coingecko/api/v1/coins
+
+housekeeping:
+  time: 24

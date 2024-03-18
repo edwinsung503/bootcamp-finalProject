@@ -1,5 +1,6 @@
 package com.vtx.bootcamp.productdata.service;
 
+import java.time.LocalTime;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,5 +10,9 @@ public interface CoinService {
 
   @Transactional
   void deleteCoin(List<String> coinId);
+
+  void getCoinPrice(List<String> coinId);
+
+  void deleteCoinPrice(LocalTime currentTime);
   
 }

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.vtx.bootcamp.productdata.controller.CoinOperation;
-import com.vtx.bootcamp.productdata.dto.response.CoinDTO;
 import com.vtx.bootcamp.productdata.service.CoinService;
 
 @RestController

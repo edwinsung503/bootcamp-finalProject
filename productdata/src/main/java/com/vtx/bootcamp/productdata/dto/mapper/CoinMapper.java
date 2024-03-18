@@ -5,11 +5,10 @@ import com.vtx.bootcamp.productdata.entity.CoinEntity;
 
 @Component
 public class CoinMapper{
-
+  // CoinDTO -> CoinEntity
   public static CoinEntity map(String coinDTO){
     //mapper from rq dto to response dto
     CoinEntity coinEntity = CoinEntity.builder()
-      //.coinId(coinDTO.getCoin_id())
       .coinId(coinDTO)
       .build();
     return coinEntity;

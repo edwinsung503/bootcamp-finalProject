@@ -25,12 +25,9 @@ public class StockServiceImpl implements StockService{
         stockJpaRepository.save(stockEntity);
       } else {
         for (StockEntity stockidEntity : stockidsEntities){
-          if ( stockEntity.getStockId().equals(stockidEntity.getStockId())){
-            System.out.println("Equal");
-          } else {
+          if (! stockEntity.getStockId().equals(stockidEntity.getStockId())){
             stockJpaRepository.save(stockEntity);
-            System.out.println("Saved");
-          }
+          } 
         }
       }    
     }
