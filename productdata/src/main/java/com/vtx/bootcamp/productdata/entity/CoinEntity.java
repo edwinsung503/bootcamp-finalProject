@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table (name = "tproduct_coins")
+@Table (name = "tproduct_coin_list")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,7 +27,7 @@ public class CoinEntity implements Serializable{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @Column(name = "coin_id")
+  @Column(name = "coin_code")
   private String coinId;
 
   

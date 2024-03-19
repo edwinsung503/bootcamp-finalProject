@@ -1,19 +1,19 @@
 package com.vtx.bootcamp.productdata.dto.mapper;
 
 import org.springframework.stereotype.Component;
-import com.vtx.bootcamp.productdata.dto.response.CryptoCoingeckoDTO;
+import com.vtx.bootcamp.productdata.dto.request.CryptoCoingeckoDTO;
 import com.vtx.bootcamp.productdata.entity.CryptoCiongeckoEntity;
 
 @Component
 public class CryptoCiongeckoMapper {
 
   
-  public static CryptoCiongeckoEntity map(CryptoCoingeckoDTO cryptoCoingeckoDTO){
+  public static CryptoCiongeckoEntity map(CryptoCoingeckoDTO cryptoCoingeckoDTO,String coins){
 
     CryptoCiongeckoEntity ciongeckoEntity = CryptoCiongeckoEntity.builder()
                 .quote_date(cryptoCoingeckoDTO.getData().get(0).getLastUpdated())
                 .qutoe_coin_code(cryptoCoingeckoDTO.getData().get(0).getSymbol())
-                .qutoe_currency(null)
+                .qutoe_currency(coins)
                 .name(cryptoCoingeckoDTO.getData().get(0).getName())
                 .image(cryptoCoingeckoDTO.getData().get(0).getImage())
                 .curr_price(cryptoCoingeckoDTO.getData().get(0).getCurrentPrice())

@@ -1,4 +1,4 @@
-package com.vtx.bootcamp.productdata.dto.response;
+package com.vtx.bootcamp.productdata.dto.request;
 
 import java.sql.Timestamp;
 import java.util.List;
