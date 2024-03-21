@@ -30,6 +30,4 @@ public class CoinEntity implements Serializable{
   @Column(name = "coin_code")
   private String coinId;
 
-  
-
 }

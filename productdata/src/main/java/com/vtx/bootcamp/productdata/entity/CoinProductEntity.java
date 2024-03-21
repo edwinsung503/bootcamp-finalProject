@@ -32,5 +32,7 @@ public class CoinProductEntity implements Serializable{
   private double price_chg_pct;
   private double market_cap;
   private String logo;
+
+
   
 }

@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -35,7 +36,7 @@ public class ScheduleConfig {
   @Autowired
   private CryptoCiongeckoRepository ciongeckoRepository;
   
-  @Scheduled(fixedDelay = 600000) // 600000 -> 10mins
+  @Scheduled(fixedDelay = 60000) // 600000 -> 10mins
   public void fixedDelayTaskCoins() throws InterruptedException{
     System.out.println("start fixedDelayTask: Coins Price");
     List<CoinEntity> coin = coinJpaRepository.findAll();
@@ -86,16 +87,16 @@ public class ScheduleConfig {
     System.out.println("end fixedDelayTask: Stocks Profile");
   }
 
-  @Scheduled(fixedDelay = 600000)
+  @Scheduled(fixedDelay = 60000)
   public void fixedDelayTaskCoinRetrive() throws InterruptedException{
     System.out.println("start fixedDelayTask: Coin Retrive");
     List<CryptoCiongeckoEntity> cryptoCiongeckoEntities = ciongeckoRepository.findAll();
     List<CoinEntity> coin = coinJpaRepository.findAll();
     int total = cryptoCiongeckoEntities.size();
     for (CoinEntity c : coin){
-      for (int i = total -1 ; i > 0 ; i--){
+      for (int i = total - 1  ; i > 0 ; i--){
         if (cryptoCiongeckoEntities.get(i).getQutoe_currency().equals(c.getCoinId())){
-          coinServiceImpl.saveCoin(cryptoCiongeckoEntities.get(i));
+          coinServiceImpl.saveCoin(cryptoCiongeckoEntities.get(i),c);
           break;
         }
       }

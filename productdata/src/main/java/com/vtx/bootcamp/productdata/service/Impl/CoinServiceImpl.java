@@ -96,8 +96,19 @@ public class CoinServiceImpl implements CoinService{
   }
 
   @Override
-  public void saveCoin(CryptoCiongeckoEntity cryptoCiongeckoEntity){
-    CoinProductEntity coinProductEntity = CoinProductMapper.map(cryptoCiongeckoEntity);
-    coinProductRepository.save(coinProductEntity);
+  public void saveCoin(CryptoCiongeckoEntity cryptoCiongeckoEntity,CoinEntity coinEntity){
+    List<CoinProductEntity> coinProductEntities = coinProductRepository.findAll();
+    CoinProductEntity coinProductEntity = CoinProductMapper.map(cryptoCiongeckoEntity,coinEntity);
+    if (coinProductEntities.isEmpty()){
+      coinProductRepository.save(coinProductEntity);
+    } else {
+      //update + delete
+      //find coin_id already exist -> exist -> delete and update
+      coinProductRepository.deleteAll();
+      for (CoinProductEntity c : coinProductEntities){
+        coinProductRepository.save(coinProductEntity);
+      }
+    }
+    
   }
 }

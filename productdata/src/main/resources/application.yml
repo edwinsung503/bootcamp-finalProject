@@ -23,9 +23,10 @@ currency:
 url: 
   domain: http://edwinsung.com/crypto/coingecko/api/v1/coins
   #domain: http://localhost:8090/crypto/coingecko/api/v1/coins
-  stockQuote: http://localhost:8091/stock/finnhub/api/v1/quote?symbol=
   #stockQuote: http://localhost:8091/stock/finnhub/api/v1/quote?symbol=
-  stockProfile: http://localhost:8091/stock/finnhub/api/v1/profile2?symbol=
+  stockQuote: http://ec2-184-72-201-165.compute-1.amazonaws.com:8091/stock/finnhub/api/v1/quote?symbol=
+  #stockProfile: http://localhost:8091/stock/finnhub/api/v1/profile2?symbol=
+  stockProfile: http://ec2-184-72-201-165.compute-1.amazonaws.com:8091/stock/finnhub/api/v1/profile2?symbol=
 
 housekeeping:
   time: 24
