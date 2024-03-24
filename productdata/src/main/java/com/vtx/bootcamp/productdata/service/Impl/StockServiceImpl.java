@@ -9,15 +9,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import com.vtx.bootcamp.productdata.dto.mapper.FinnhubProfileMapper;
 import com.vtx.bootcamp.productdata.dto.mapper.FinnhubQuoteMapper;
+import com.vtx.bootcamp.productdata.dto.mapper.StockDailyProductMapper;
 import com.vtx.bootcamp.productdata.dto.mapper.StockMapper;
+import com.vtx.bootcamp.productdata.dto.mapper.StockProductMapper;
 import com.vtx.bootcamp.productdata.dto.request.FinnhubProfileDTO;
 import com.vtx.bootcamp.productdata.dto.request.FinnhubQuoteDTO;
 import com.vtx.bootcamp.productdata.entity.FinnhubProfileEntity;
 import com.vtx.bootcamp.productdata.entity.FinnhubQuoteEntity;
+import com.vtx.bootcamp.productdata.entity.StockDailyProductEntity;
 import com.vtx.bootcamp.productdata.entity.StockEntity;
+import com.vtx.bootcamp.productdata.entity.StockProductEntity;
 import com.vtx.bootcamp.productdata.repository.FinnhubProfileRespository;
 import com.vtx.bootcamp.productdata.repository.FinnhubQuoteRepository;
+import com.vtx.bootcamp.productdata.repository.StockDailyProductRepository;
 import com.vtx.bootcamp.productdata.repository.StockJpaRepository;
+import com.vtx.bootcamp.productdata.repository.StockProductRepository;
 import com.vtx.bootcamp.productdata.service.StockService;
 
 @Service
@@ -40,6 +46,12 @@ public class StockServiceImpl implements StockService{
 
   @Autowired
   private FinnhubProfileRespository finnhubProfileRespository;
+
+  @Autowired
+  private StockProductRepository stockProductRepository;
+
+  @Autowired
+  private StockDailyProductRepository stockDailyProductRepository;
 
   @Autowired
   private RestTemplate restTemplate;
@@ -111,6 +123,34 @@ public class StockServiceImpl implements StockService{
       Duration duration = Duration.between(timeFromTimestamp, currentTime);
       if (duration.compareTo(Duration.ofHours(time)) > 0) {
         finnhubProfileRespository.deleteById(finnhubProfileEntities.getId());
+      }
+    }
+  }
+
+  @Override
+  public void saveStock(FinnhubProfileEntity finnhubProfileEntity, FinnhubQuoteEntity finnhubQuoteEntity,StockEntity stockEntity){
+    List<StockProductEntity> stockProductEntities = stockProductRepository.findAll();
+    StockProductEntity stockProductEntity = StockProductMapper.map(finnhubProfileEntity,finnhubQuoteEntity,stockEntity);
+    if (stockProductEntities.isEmpty()){
+      stockProductRepository.save(stockProductEntity);
+    } else {
+      stockProductRepository.deleteAll();
+      for (StockProductEntity s : stockProductEntities){
+        stockProductRepository.save(stockProductEntity);
+      }
+    }
+  }
+
+  @Override
+  public void saveDailyStock(FinnhubQuoteEntity finnhubQuoteEntity,StockEntity stockEntity){
+    List<StockDailyProductEntity> stockDailyProductEntities = stockDailyProductRepository.findAll();
+    StockDailyProductEntity stockDailyProductEntity = StockDailyProductMapper.map(finnhubQuoteEntity, stockEntity);
+    if(stockDailyProductEntities.isEmpty()){
+      stockDailyProductRepository.save(stockDailyProductEntity);
+    } else {
+      stockDailyProductRepository.deleteAll();
+      for (StockDailyProductEntity s : stockDailyProductEntities){
+        stockDailyProductRepository.save(stockDailyProductEntity);
       }
     }
   }

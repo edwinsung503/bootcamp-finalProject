@@ -16,4 +16,5 @@ public interface StockOperation {
   @GetMapping(value = "/delete/stocks")
   ResponseEntity<String> deleteStock(@RequestParam(value="stock_id") List<String> stock_id);
 
+  
 }

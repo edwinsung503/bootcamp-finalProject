@@ -11,7 +11,7 @@ public class CoinProductMapper {
   public static CoinProductEntity map(CryptoCiongeckoEntity cryptoCiongeckoEntity,CoinEntity coinEntity){
     
     CoinProductEntity coinProductEntity = CoinProductEntity.builder()
-          .coin_id(coinEntity.getId())
+          .coinEntity(coinEntity)
           .name(cryptoCiongeckoEntity.getName())
           .curr_price(cryptoCiongeckoEntity.getCurr_price())
           .price_chg_pct(cryptoCiongeckoEntity.getPrice_change_pct_24h())

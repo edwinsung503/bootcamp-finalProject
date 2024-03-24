@@ -4,15 +4,18 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import com.vtx.bootcamp.productdata.entity.CoinEntity;
 import com.vtx.bootcamp.productdata.entity.CryptoCiongeckoEntity;
+import com.vtx.bootcamp.productdata.entity.FinnhubProfileEntity;
+import com.vtx.bootcamp.productdata.entity.FinnhubQuoteEntity;
 import com.vtx.bootcamp.productdata.entity.StockEntity;
 import com.vtx.bootcamp.productdata.repository.CoinJpaRepository;
 import com.vtx.bootcamp.productdata.repository.CryptoCiongeckoRepository;
+import com.vtx.bootcamp.productdata.repository.FinnhubProfileRespository;
+import com.vtx.bootcamp.productdata.repository.FinnhubQuoteRepository;
 import com.vtx.bootcamp.productdata.repository.StockJpaRepository;
 import com.vtx.bootcamp.productdata.service.Impl.CoinServiceImpl;
 import com.vtx.bootcamp.productdata.service.Impl.StockServiceImpl;
@@ -35,7 +38,13 @@ public class ScheduleConfig {
 
   @Autowired
   private CryptoCiongeckoRepository ciongeckoRepository;
-  
+
+  @Autowired
+  private FinnhubQuoteRepository finnhubQuoteRepository;
+
+  @Autowired
+  private FinnhubProfileRespository finnhubProfileRespository;
+
   @Scheduled(fixedDelay = 60000) // 600000 -> 10mins
   public void fixedDelayTaskCoins() throws InterruptedException{
     System.out.println("start fixedDelayTask: Coins Price");
@@ -53,7 +62,7 @@ public class ScheduleConfig {
     System.out.println("end fixedDelayTask: Coins Price");
   }
   
-  @Scheduled(fixedDelay = 600000)
+  @Scheduled(fixedDelay = 60000)
   public void fixedDelayTaskStocksQuote() throws InterruptedException{
     System.out.println("start fixedDelayTask: Stocks Price");
     List<StockEntity> stock = stockJpaRepository.findAll();
@@ -70,7 +79,7 @@ public class ScheduleConfig {
     System.out.println("end fixedDelayTask: Stocks Price");
   }
 
-  @Scheduled(fixedDelay = 600000)
+  @Scheduled(fixedDelay = 60000)
   public void fixedDelayTaskStocksProfile() throws InterruptedException{
     System.out.println("start fixedDelayTask: Stocks Profile");
     List<StockEntity> stock = stockJpaRepository.findAll();
@@ -103,4 +112,39 @@ public class ScheduleConfig {
     }  
     System.out.println("end fixedDelayTask: Coin Retrive");
   }
+  @Scheduled(fixedDelay = 60000)
+  public void fixedDelayTaskStockRetrive() throws InterruptedException{
+    System.out.println("start fixedDelayTask: Stock Retrive");
+    List<FinnhubQuoteEntity> finnhubQuoteEntities = finnhubQuoteRepository.findAll();
+    List<FinnhubProfileEntity> finnhubProfileEntities = finnhubProfileRespository.findAll();
+    List<StockEntity> stock = stockJpaRepository.findAll();
+    int total = finnhubQuoteEntities.size();
+    for (StockEntity s : stock){
+      for (int i = total -1 ; i> 0 ;i--){
+        if (finnhubQuoteEntities.get(i).getQuote_stock_code().equals(s.getStockId())){
+          stockServiceImpl.saveStock(finnhubProfileEntities.get(i-1), finnhubQuoteEntities.get(i), s);
+          break;
+        }
+      }
+    }
+    System.out.println("end fixedDelayTask: Stock Retrive");
+  }
+  @Scheduled(cron = "0 0 6 * * TUE-SAT")
+  public void fixedDelayTaskStockDailyRetrive() throws InterruptedException{
+    System.out.println("start fixedDelayTask: Stock Daily Retrive");
+    List<FinnhubQuoteEntity> finnhubQuoteEntities = finnhubQuoteRepository.findAll();
+    List<StockEntity> stock = stockJpaRepository.findAll();
+    int total = finnhubQuoteEntities.size();
+    for (StockEntity s : stock){
+      for (int i = total -1 ; i> 0 ;i--){
+        if (finnhubQuoteEntities.get(i).getQuote_stock_code().equals(s.getStockId())){
+          stockServiceImpl.saveDailyStock(finnhubQuoteEntities.get(i), s);
+          break;
+        }
+      }
+    }
+    System.out.println("end fixedDelayTask: Stock Retrive");
+  }
+
+
 }

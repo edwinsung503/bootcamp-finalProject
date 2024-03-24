@@ -15,27 +15,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tproduct_coin")
+@Table(name = "tproduct_stock")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CoinProductEntity implements Serializable{
-
+public class StockProductEntity implements Serializable{
+  
   private static final long serialVersionUID = 1L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  //private Long coin_id;
   @OneToOne
-  @JoinColumn(name = "coin_id", referencedColumnName = "id")
-  private CoinEntity coinEntity;
+  @JoinColumn(name = "stock_id", referencedColumnName = "id")
+  private StockEntity stockEntity;
   private String name;
   private double curr_price;
   private double price_chg_pct;
   private double market_cap;
   private String logo;
-
 }
