@@ -129,7 +129,7 @@ public class ScheduleConfig {
     }
     System.out.println("end fixedDelayTask: Stock Retrive");
   }
-  @Scheduled(cron = "0 0 6 * * TUE-SAT")
+  @Scheduled(cron = "0 0 6 * * MON-SAT")
   public void fixedDelayTaskStockDailyRetrive() throws InterruptedException{
     System.out.println("start fixedDelayTask: Stock Daily Retrive");
     List<FinnhubQuoteEntity> finnhubQuoteEntities = finnhubQuoteRepository.findAll();
@@ -143,7 +143,7 @@ public class ScheduleConfig {
         }
       }
     }
-    System.out.println("end fixedDelayTask: Stock Retrive");
+    System.out.println("end fixedDelayTask: Stock Daily Retrive");
   }
 
 

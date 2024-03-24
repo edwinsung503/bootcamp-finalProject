@@ -145,13 +145,11 @@ public class StockServiceImpl implements StockService{
   public void saveDailyStock(FinnhubQuoteEntity finnhubQuoteEntity,StockEntity stockEntity){
     List<StockDailyProductEntity> stockDailyProductEntities = stockDailyProductRepository.findAll();
     StockDailyProductEntity stockDailyProductEntity = StockDailyProductMapper.map(finnhubQuoteEntity, stockEntity);
-    if(stockDailyProductEntities.isEmpty()){
+    if (stockDailyProductEntities.isEmpty()){
       stockDailyProductRepository.save(stockDailyProductEntity);
-    } else {
-      stockDailyProductRepository.deleteAll();
-      for (StockDailyProductEntity s : stockDailyProductEntities){
-        stockDailyProductRepository.save(stockDailyProductEntity);
-      }
+    }
+    for (StockDailyProductEntity s : stockDailyProductEntities){
+      stockDailyProductRepository.save(stockDailyProductEntity);
     }
   }
 }

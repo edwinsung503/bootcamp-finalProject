@@ -13,7 +13,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: update # update
+      ddl-auto: create # update / create # or create-drop if you want to drop the tables on application shutdown
 server:
   port: 8088
 
