@@ -1,6 +1,7 @@
 package com.vtxlab.bootcamp.dataservice.service.Impl;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,35 +40,47 @@ public class RedisStockDailyServiceImpl  implements RedisStockDailyService{
     if (stockData != null){
       return stockData;
     } else {
-      List<TProductStockDailyEntity> tProductStockDailyEntities = tProductStockDailyRespoitory.findAll();
-      List<StockEntity> stockEntities = stockRespoitory.findAll();
+      try {
+        List<TProductStockDailyEntity> tProductStockDailyEntities = tProductStockDailyRespoitory.findAll();
+        List<StockEntity> stockEntities = stockRespoitory.findAll();
 
+        
+        List<RedisProductResponseDTO> redisProductResponseDTOs = tProductStockDailyEntities.stream()
+              .map(p -> {
+                StockEntity stockEntity = stockEntities.stream()
+                .filter(stock -> stock.getId().equals(p.getStock_id()))
+                .findFirst()
+                .orElse(null);
+
+                String stockCode = (stockEntity != null) ? stockEntity.getStock_code() : null;
+
+                return RedisProductResponseDTO.builder()
+                    .productId(stockCode)
+                    .trade_date(p.getTrade_date())
+                    .day_high(p.getDay_high())
+                    .day_low(p.getDay_low())
+                    .day_open(p.getDay_open())
+                    .day_end(p.getDay_end())
+                    .build();
+
+              }).collect(Collectors.toList());
+
+          RedisProductFinalResponseDTO response = RedisProductFinalResponseDTO.builder()
+            .code(Syscode.OK.getCode())
+            .message(Syscode.OK.getMessage())
+            .redisProductResponseDTO(redisProductResponseDTOs)
+            .build();
+
+          redisHelper.setValueWithExpiration(key, response, 24, TimeUnit.HOURS);
+          return response;
+      } catch (Exception e) {
+        return RedisProductFinalResponseDTO.builder()
+            .code(Syscode.REST_CLIENT_EXCEPTION.getCode())
+            .message(Syscode.REST_CLIENT_EXCEPTION.getMessage())
+            .redisProductResponseDTO(null)
+            .build();
+      }
       
-      List<RedisProductResponseDTO> redisProductResponseDTOs = tProductStockDailyEntities.stream()
-            .map(p -> {
-              StockEntity stockEntity = stockEntities.stream()
-              .filter(stock -> stock.getId().equals(p.getStock_id()))
-              .findFirst()
-              .orElse(null);
-
-              String stockCode = (stockEntity != null) ? stockEntity.getStock_code() : null;
-
-              return RedisProductResponseDTO.builder()
-                  .productId(stockCode)
-                  .trade_date(p.getTrade_date())
-                  .day_high(p.getDay_high())
-                  .day_low(p.getDay_low())
-                  .day_open(p.getDay_open())
-                  .day_end(p.getDay_end())
-                  .build();
-
-            }).collect(Collectors.toList());
-
-      return RedisProductFinalResponseDTO.builder()
-        .code(Syscode.OK.getCode())
-        .message(Syscode.OK.getMessage())
-        .redisProductResponseDTO(redisProductResponseDTOs)
-        .build();
     }
     
   }
