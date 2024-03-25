@@ -19,6 +19,8 @@ public class AppStartRunnerCoins implements CommandLineRunner {
   @Autowired
   private CoinServiceImpl coinServiceImpl;
 
+  List<String> coinsId = new ArrayList<>();
+
   @Override
   public void run(String ... args){
     System.out.println("Check CoinList - App Start Process.");
@@ -33,7 +35,6 @@ public class AppStartRunnerCoins implements CommandLineRunner {
     }
     if (empty == true || hasBitcoin == false){
       System.out.println("no bitcoin or no coinId");
-      List<String> coinsId = new ArrayList<>();
       coinsId.add("bitcoin");
       coinServiceImpl.addCoin(coinsId);
     } 

@@ -108,6 +108,7 @@ public class ScheduleConfig {
           coinServiceImpl.saveCoin(cryptoCiongeckoEntities.get(i),c);
           break;
         }
+        
       }
     }  
     System.out.println("end fixedDelayTask: Coin Retrive");
@@ -122,14 +123,15 @@ public class ScheduleConfig {
     for (StockEntity s : stock){
       for (int i = total -1 ; i> 0 ;i--){
         if (finnhubQuoteEntities.get(i).getQuote_stock_code().equals(s.getStockId())){
-          stockServiceImpl.saveStock(finnhubProfileEntities.get(i-1), finnhubQuoteEntities.get(i), s);
+          stockServiceImpl.saveStock(finnhubProfileEntities.get(i), finnhubQuoteEntities.get(i), s);
           break;
         }
       }
     }
     System.out.println("end fixedDelayTask: Stock Retrive");
   }
-  @Scheduled(cron = "0 0 6 * * MON-SAT")
+  //@Scheduled(cron = "0 0 6 * * MON-SAT")
+  //@Scheduled(fixedDelay = 60000)
   public void fixedDelayTaskStockDailyRetrive() throws InterruptedException{
     System.out.println("start fixedDelayTask: Stock Daily Retrive");
     List<FinnhubQuoteEntity> finnhubQuoteEntities = finnhubQuoteRepository.findAll();

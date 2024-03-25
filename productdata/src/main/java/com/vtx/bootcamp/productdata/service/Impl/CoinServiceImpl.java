@@ -99,16 +99,21 @@ public class CoinServiceImpl implements CoinService{
   public void saveCoin(CryptoCiongeckoEntity cryptoCiongeckoEntity,CoinEntity coinEntity){
     List<CoinProductEntity> coinProductEntities = coinProductRepository.findAll();
     CoinProductEntity coinProductEntity = CoinProductMapper.map(cryptoCiongeckoEntity,coinEntity);
-    if (coinProductEntities.isEmpty()){
-      coinProductRepository.save(coinProductEntity);
-    } else {
-      //update + delete
-      //find coin_id already exist -> exist -> delete and update
-      coinProductRepository.deleteAll();
-      for (CoinProductEntity c : coinProductEntities){
-        coinProductRepository.save(coinProductEntity);
+    boolean found = false;
+
+    for (CoinProductEntity existingEntity : coinProductEntities) {
+      // Check if the coin IDs match
+      if (existingEntity.getCoinEntity().getCoinId().equals(coinEntity.getCoinId())) {
+          // Delete existing entity
+          System.out.println("exist");
+          coinProductRepository.deleteById(existingEntity.getId());
+          found = true;
+          break; // No need to continue searching once found
       }
     }
-    
+    // If no matching entity is found, or if the list is empty, save the new entity
+    if (!found || coinProductEntities.isEmpty()) {
+      coinProductRepository.save(coinProductEntity);
+    }
   }
 }

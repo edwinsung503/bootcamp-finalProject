@@ -131,13 +131,18 @@ public class StockServiceImpl implements StockService{
   public void saveStock(FinnhubProfileEntity finnhubProfileEntity, FinnhubQuoteEntity finnhubQuoteEntity,StockEntity stockEntity){
     List<StockProductEntity> stockProductEntities = stockProductRepository.findAll();
     StockProductEntity stockProductEntity = StockProductMapper.map(finnhubProfileEntity,finnhubQuoteEntity,stockEntity);
-    if (stockProductEntities.isEmpty()){
-      stockProductRepository.save(stockProductEntity);
-    } else {
-      stockProductRepository.deleteAll();
-      for (StockProductEntity s : stockProductEntities){
-        stockProductRepository.save(stockProductEntity);
+    boolean found = false;
+
+    for (StockProductEntity existingEntity : stockProductEntities){
+      if (existingEntity.getStockEntity().getStockId().equals(stockEntity.getStockId())){
+        System.out.println("StockProductEntity exist");
+        stockProductRepository.deleteById(existingEntity.getId());
+        found = true;
+        break;
       }
+    }
+    if (!found ||  stockProductEntities.isEmpty()) {
+      stockProductRepository.save(stockProductEntity);
     }
   }
 
@@ -145,11 +150,14 @@ public class StockServiceImpl implements StockService{
   public void saveDailyStock(FinnhubQuoteEntity finnhubQuoteEntity,StockEntity stockEntity){
     List<StockDailyProductEntity> stockDailyProductEntities = stockDailyProductRepository.findAll();
     StockDailyProductEntity stockDailyProductEntity = StockDailyProductMapper.map(finnhubQuoteEntity, stockEntity);
-    if (stockDailyProductEntities.isEmpty()){
-      stockDailyProductRepository.save(stockDailyProductEntity);
-    }
-    for (StockDailyProductEntity s : stockDailyProductEntities){
-      stockDailyProductRepository.save(stockDailyProductEntity);
-    }
+    stockDailyProductRepository.save(stockDailyProductEntity);
+    
+
+    ///if (stockDailyProductEntities.isEmpty()){
+    //  stockDailyProductRepository.save(stockDailyProductEntity);
+    //}
+    //for (StockDailyProductEntity s : stockDailyProductEntities){
+    //  stockDailyProductRepository.save(stockDailyProductEntity);
+    //}
   }
 }
